@@ -5,8 +5,7 @@ import axios from 'axios'
 export class LeagueAuthenticatorInterceptor implements NestInterceptor {
     intercept(_: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
 
-        axios.defaults.headers["X-Riot-Token"] = 'RGAPI-3a7fafa7-27ed-4b98-af16-92be37c0f988'
-        
+        axios.defaults.headers["X-Riot-Token"] = process.env.RIOT_API_KEY
         return next.handle()
     }
 }

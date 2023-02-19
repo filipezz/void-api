@@ -6,12 +6,24 @@ import { HttpService } from '../http/http-service';
 import { LeagueHttpService } from './league-http.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Match } from './entities/match.entity';
-import {UrlBuilderService} from './url-builder.service'
+import { UrlBuilderService } from './url-builder.service';
 import { HttpModule } from '@nestjs/axios';
+import { PlayerSummary } from './entities/player-summary.entity';
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Match]), HttpModule],
+  imports: [
+    TypeOrmModule.forFeature([Match]),
+    TypeOrmModule.forFeature([PlayerSummary]),
+    HttpModule,
+  ],
   controllers: [LeagueController],
-  providers: [LeagueService, LeagueSerializer, HttpService, LeagueHttpService, UrlBuilderService],
+  providers: [
+    LeagueService,
+    LeagueSerializer,
+    HttpService,
+    LeagueHttpService,
+    UrlBuilderService,
+  ],
 })
 export class LeagueModule {}

@@ -1,3 +1,9 @@
 import { Match } from '../entities/match.entity'
 
-export type MatchReponse = Omit<Match, 'id' | 'createdAt'>;
+export type MatchResponse = Omit<Match, 'id' | 'createdAt' | 'gameDuration' | "totalMinionsKilled" | "summoner" | "kills"| "assists"|"deaths"> & 
+{
+    kda:string;
+    csPerMinute:string;
+};
+
+export type CategorizedMatchResponse = { [key in string]: MatchResponse[] }

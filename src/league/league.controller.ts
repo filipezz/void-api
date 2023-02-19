@@ -3,26 +3,47 @@ import {
   Query,
   Get,
   UseInterceptors,
-  CacheInterceptor
+  CacheInterceptor,
+  UseFilters,
 } from '@nestjs/common';
 import { LeagueService } from './league.service';
-import { GetRecentMachesDTO } from './dto/get-recent-matches.dto';
+import { GetRecentMatchesDTO } from './dto/get-recent-matches.dto';
 import { LeagueAuthenticatorInterceptor } from '../interceptors/league-authenticator.interceptor';
+import { HttpExceptionFilter } from './http-exception-filter';
 
 @UseInterceptors(LeagueAuthenticatorInterceptor)
-@Controller('riot')
+@Controller('league')
+@UseFilters(HttpExceptionFilter) 
 export class LeagueController {
-  constructor(private readonly riotService: LeagueService) {}
+  constructor(private readonly leagueService: LeagueService) {}
 
   @UseInterceptors(CacheInterceptor)
   @Get('/recent-matches')
-  getRecentMaches(
-    @Query() { count,regionName,summonerName } : GetRecentMachesDTO,
+  getRecentMatches(
+    @Query() { count, regionName, summonerName }: GetRecentMatchesDTO,
   ) {
-    return this.riotService.getRecentMaches({
+    return this.leagueService.getRecentMatches({
       count,
       regionName,
-      summonerName,
+      summonerName: summonerName.toLowerCase(),
     });
+  }
+
+  @UseInterceptors(CacheInterceptor)
+  @Get('/player-summary')
+  playerSummary(
+    @Query() { regionName, summonerName }: GetRecentMatchesDTO,
+  ) {
+
+    
+    return this.leagueService.playerSummary({ regionName, summonerName: summonerName.toLowerCase() });
+  }
+
+  @UseInterceptors(CacheInterceptor)
+  @Get('/leaderboard')
+  leaderboard(
+    @Query() { regionName, summonerName }: GetRecentMatchesDTO,
+  ) {
+    return this.leagueService.leaderboards({ regionName, summonerName: summonerName.toLowerCase() });
   }
 }

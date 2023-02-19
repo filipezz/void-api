@@ -1,13 +1,14 @@
-export interface RiotMatchReponse {
+export interface RiotMatchResponse {
   metadata: Metadata
   info: Info;
 }
 
-type Info = {
+export type Info = {
   gameDuration: number;
   gameMode: string;
   gameId: string;
-  participants: Participants[]
+  participants: Participant[],
+  queueId:number
 }
 
 type Metadata = {
@@ -15,7 +16,9 @@ type Metadata = {
   participants: string[]
 }
 
-type Participants = {
+export type Participant = {
+  visionScore:number;
+  summonerName:string;
   puuid: string;
   assists: number;
   deaths: number;
@@ -25,5 +28,4 @@ type Participants = {
   championName: string;
   challenges: {
   }
-
 }

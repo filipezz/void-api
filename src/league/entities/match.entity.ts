@@ -6,27 +6,33 @@ export class Match {
   id: string;
 
   @Column({ type: 'varchar' })
+  summoner: string;
+
+  @Column({ type: 'varchar' })
   champion: string;
 
   @Column({ type: 'boolean' })
   win: boolean;
 
-  @Column({ type: 'varchar' })
-  kda: string;
+  @Column({ type: 'int' })
+  kills: number;
 
-  @Column({ type: 'varchar' })
-  kills: string;
+  @Column({ type: 'int' })
+  assists: number;
 
-  @Column({ type: 'varchar' })
-  assists: string;
-
-  @Column({ type: 'varchar' })
-  csPerMinute: string;
+  @Column({ type: 'int' })
+  deaths: number;
 
   @Column({type: 'varchar'})
   gameMode: string;
+  
+  @Column({type: 'int'})
+  gameDuration: number;
 
-  @Column({type: 'varchar'})
+  @Column({type: 'int'})
+  totalMinionsKilled: number;
+  
+  @Column({type: 'varchar', unique:true})
   matchId: string;
 
   @CreateDateColumn()
